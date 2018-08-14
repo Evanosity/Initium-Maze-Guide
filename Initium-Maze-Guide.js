@@ -1,13 +1,16 @@
 // ==UserScript==
-// @name         Initium Maze Guide 2.0
+// @name         Initium Maze Guide
 // @namespace    http://tampermonkey.net/
-// @version      2.0
+// @version      3.1
 // @description  Makes mazes in initium easy to use.
 // @author       @evanosity
 // @match        https://www.playinitium.com/main.jsp#
 // @include      *playinitium.com/*
 // @grant        none
 // ==/UserScript==
+
+const REFRESH_RATE = 2500; //this is how often the paths will be renamed, in milliseconds.
+
 function makeGuide(){
     //Tunnel Climb guide - made by MGO
     $('a[onclick="doGoto(event, 5696774480068608)"]').text('A <-> B');
@@ -26,6 +29,8 @@ function makeGuide(){
     $('a[onclick="doGoto(event, 6615196730654720)"]').text('H <-> I');
     $('a[onclick="doGoto(event, 5671617816428544)"]').text('G <-> H');
     $('a[onclick="doGoto(event, 6631864156553216)"]').text('A <-> H');
+    $('a[onclick="doGoto(event, 5445496747327488)"]').text('C <-> D');
+
 
     //Kujir/Lizardfolk guide
     $('a[onclick="doGoto(event, 5362167264051200)"]').text('Lizardfolk 1 <-> Kujir 5');
@@ -62,14 +67,7 @@ function makeGuide(){
     $('a[onclick="doGoto(event, 4872389088247808)"]').text('Desert 1 <-> Desert 1A');
     $('a[onclick="doGoto(event, 4669739243667456)"]').text('Desert 2 <-> Desert 3');
     $('a[onclick="doGoto(event, 6122954313170944)"]').text('Desert 1 <-> Desert 2');
-
-
-
-    //Strange Empty Room Guide
 }
 $(document).ready(function() {
-    $('body').append('<input type="button" value="Reset Maze Paths" id="mazereset-button">');
-    $("#mazereset-button").css("position", "fixed").css("top", 110).css("left", 0).css("zIndex", 10000000000);
-    document.getElementById("mazereset-button").addEventListener("click", makeGuide);
-    //setInterval(main,700);
+    setInterval(makeGuide,REFRESH_RATE);
 });
